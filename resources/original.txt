@@ -1,0 +1,18 @@
+Hello Bob,
+
+I wanted to share a message with you:
+<<<
+My favorite flavor is hazelnut!
+>>>
+Wasn't that a great secret?
+
+Regards,
+Alice
+
+P.S.
+<<<
+These letters have been a great distraction.
+I know you are always there to hear what I have to say.
+Write again soon, but not too soon.
+Thanks
+>>>
