@@ -56,6 +56,10 @@ public class CBCEncryption {
             evenBlockSample();
         if(containsMatch(args[0], "file"))
             fileSample(args[1], args[2]);
+        if(containsMatch(args[0], "encrypt"))
+            encryptFileBlowfish(stringToBytes(args[1]), args[2], args[3]);
+        if(containsMatch(args[0], "decrypt"))
+            decryptFileBlowfish(stringToBytes(args[1]), args[2], args[3]);
     }
 
     public static void fileSample(String keystring, String plaintext_filename) throws InvalidKeyException, FileNotFoundException {
