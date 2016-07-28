@@ -7,25 +7,25 @@ Let's make a class to use a 64 bit block cipher in CBC (cipher block chaining) m
 You may be interested in browsing the wiki pages for [block ciphers](https://en.wikipedia.org/wiki/Block_cipher), block cipher [modes](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation), CBC with [ciphertext stealing](https://en.wikipedia.org/wiki/Ciphertext_stealing#CBC_ciphertext_stealing_encryption_using_a_standard_CBC_interface), and perhaps [Blowfish](https://www.schneier.com/academic/blowfish/).
 
 ## what's here
-A bunch of support code is already written and tested! The `Blowfish` class implements the Blowfish algorithm. You use it by calling the constructor with an array of bytes for the encryption key. Then you will want to encrypt and decrypt 64 bit blocks (longs). It implements the `BlockCipher64` interface with it's encrypt and decrypt methods. `BlockCipher64` also contains two static helpers for translating byte arrays to longs and vice versa. The `BlowfishTestVectors` helped me verify that our implementation was consistent with the reference implementation. `CBCEncryption` needs some work, but contains a lot of the bits and pieces you'll need.
+A bunch of support code is already written and tested! The [`Blowfish`](src/Blowfish.java) class implements the Blowfish algorithm. You use it by calling the constructor with an array of bytes for the encryption key. Then you will want to encrypt and decrypt 64 bit blocks (longs). It implements the [`BlockCipher64`](src/BlockCipher64.java) interface with it's encrypt and decrypt methods. [`BlockCipher64`](src/BlockCipher64.java) also contains two static helpers for translating byte arrays to longs and vice versa. The [`BlowfishTestVectors`](src/BlowfishTestVectors.java) helped me verify that our implementation was consistent with the reference implementation. [`CBCEncryption`](src/CBCEncryption.java) needs some work, but contains a lot of the bits and pieces you'll need.
 
 ## what's left
-  * Read through `CBCEncryption`, it'll save you time in the long run to know what methods are there and what they do.
+  * Read through [`CBCEncryption`](src/CBCEncryption.java), it'll save you time in the long run to know what methods are there and what they do.
   * A few methods need fixin':
-    * `randomIV`
-    * `maskForFirstNBytes`
-    * `firstNBytesOfXRestFromY`
-    * `gatherBase64`
-    * `breakInto64CharLines`
+    * [`randomIV`](src/CBCEncryption.java#L35)
+    * [`maskForFirstNBytes`](src/CBCEncryption.java#L175)
+    * [`firstNBytesOfXRestFromY`](src/CBCEncryption.java#L180)
+    * [`gatherBase64`](src/CBCEncryption.java#L212)
+    * [`breakInto64CharLines`](src/CBCEncryption.java#L223)
   * Now try out some examples to get an idea of what's happening
-    * Start with the samples I wrote to help me figure this out, then try changing something
-  * Work out how we should `decrypt` an encrypted ciphertext. Use the comments and the [ciphertext stealing](https://en.wikipedia.org/wiki/Ciphertext_stealing#CBC_ciphertext_stealing_encryption_using_a_standard_CBC_interface) page. Draw an example (perhaps the two samples), figure out where the bytes go.
-  * See if your `decrypt` does what you thought it should do in your example. See that it reverses the effect of `encrypt`.
-  * Build `decryptFileBlowfish`, it's pretty easy. It's mostly the same parts used in `encryptFileBlowfish` (which is already done), but in reverse (of course).
-  * Play with it a few times!
+    * Start with [the](src/CBCEncryption.java#L69) [samples](src/CBCEncryption.java#L95) I wrote to help me figure this out, then try changing something
+  * Work out how we should [`decrypt`](src/CBCEncryption.java#L185) an encrypted ciphertext. Use the comments and the [ciphertext stealing](https://en.wikipedia.org/wiki/Ciphertext_stealing#CBC_ciphertext_stealing_encryption_using_a_standard_CBC_interface) page. Draw an example (perhaps the two samples), figure out where the bytes ought to go.
+  * See if your [`decrypt`](src/CBCEncryption.java#L185) does what you thought it should do in your example. See that it reverses the effect of [`encrypt`](src/CBCEncryption.java#L143).
+  * Build [`decryptFileBlowfish`](src/CBCEncryption.java#L269), it's straight forward. It's mostly the same parts used in [`encryptFileBlowfish`](src/CBCEncryption.java#L242), but in reverse (of course).
+  * [Play](src/CBCEncryption.java#L52) with it a few times!
 
 ### partialBlockSample
-```
+```shell
 u0xee $ java CBCEncryption partialBlockSample
 plaintext = [97, 98, 99, 100, 101, 102, 103, 104, 73, 74, 75, 76, 77, 78, 79, 80, 49, 50]
 firstBlock               = [97, 98, 99, 100, 101, 102, 103, 104]
@@ -37,7 +37,7 @@ bytesToString(decrypted) = abcdefghIJKLMNOP12
 ```
 
 ### evenBlockSample
-```
+```shell
 u0xee $ java CBCEncryption evenBlockSample
 plaintext = [97, 98, 99, 100, 101, 102, 103, 104, 73, 74, 75, 76, 77, 78, 79, 80]
 firstBlock               = [97, 98, 99, 100, 101, 102, 103, 104]
@@ -79,6 +79,8 @@ u0xee $ diff -u ../resources/original.txt ../resources/original.txt.secret.txt
 +7UseXZCoZBYmdwxuCdYJ+TEH8y85RmJQeg4O0B8I++YgkteD8P43VSpcDxfojON8
 +TDougD/8e5uoTH3o7Jro9lODnrtbw7XEtG7UMFSY40uFRNVQjOsFWWl8exEdYnc=
  >>>
+```
+```
 u0xee $ diff -u ../resources/original.txt ../resources/original.txt.secret.txt.opened.txt
 u0xee $
 ```
