@@ -22,7 +22,7 @@ A bunch of support code is already written and tested! The [`Blowfish`](src/Blow
   * Work out how we should [`decrypt`](src/CBCEncryption.java#L189) an encrypted ciphertext. Use the comments and the [ciphertext stealing](https://en.wikipedia.org/wiki/Ciphertext_stealing#CBC_ciphertext_stealing_encryption_using_a_standard_CBC_interface) page. Draw an example (perhaps the two samples), figure out where the bytes ought to go.
   * See if your [`decrypt`](src/CBCEncryption.java#L189) does what you thought it should do in your example. See that it reverses the effect of [`encrypt`](src/CBCEncryption.java#L147).
   * Build [`decryptFileBlowfish`](src/CBCEncryption.java#L273), it's straight forward. It's mostly the same parts used in [`encryptFileBlowfish`](src/CBCEncryption.java#L246), but in reverse (of course).
-  * [Play](src/CBCEncryption.java#L52) with it a few times!
+  * [Play](src/CBCEncryption.java#L52) with it!
 
 ### partialBlockSample
 ```shell
