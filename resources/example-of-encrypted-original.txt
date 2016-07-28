@@ -1,0 +1,17 @@
+Hello Bob,
+
+I wanted to share a message with you:
+<<< Base64 encoding of 16 round Blowfish in CBC mode with ciphertext stealing. IV:5f813757c9cd31fc
+GSV4lukfAqCDcM+vELXFl9urU6HzOc7alrCMg4XK1w==
+>>>
+Wasn't that a great secret?
+
+Regards,
+Alice
+
+P.S.
+<<< Base64 encoding of 16 round Blowfish in CBC mode with ciphertext stealing. IV:3259bb0f3547cd5
+QQJgr++dPaEH4tplRrDfVtt4vtYlq8FtmmbZj+y1ZqO/2ErFCKLle+1mRHMHtwzM
+uH9GyxEEHG9BbQnvsNLL2jOjn3ef5ug0sk5+n55pexK8vgWoiXVElwe3zkwm37MN
+iaw6fDt13Nw0AqoOl77lmvGBrXWIZsJDwBixdXhNYZ74VDCpTtBYt05HvCSfW94=
+>>>
