@@ -13,15 +13,15 @@ A bunch of support code is already written and tested! The [`Blowfish`](src/Blow
   * Read through [`CBCEncryption`](src/CBCEncryption.java), it'll save you time in the long run to know what methods are there and what they do.
   * A few methods need fixin':
     * [`randomIV`](src/CBCEncryption.java#L35)
-    * [`maskForFirstNBytes`](src/CBCEncryption.java#L175)
-    * [`firstNBytesOfXRestFromY`](src/CBCEncryption.java#L180)
-    * [`gatherBase64`](src/CBCEncryption.java#L212)
-    * [`breakInto64CharLines`](src/CBCEncryption.java#L223)
+    * [`maskForFirstNBytes`](src/CBCEncryption.java#L179)
+    * [`firstNBytesOfXRestFromY`](src/CBCEncryption.java#L184)
+    * [`gatherBase64`](src/CBCEncryption.java#L216)
+    * [`breakInto64CharLines`](src/CBCEncryption.java#L227)
   * Now try out some examples to get an idea of what's happening
-    * Start with [the](src/CBCEncryption.java#L69) [samples](src/CBCEncryption.java#L95) I wrote to help me figure this out, then try changing something
-  * Work out how we should [`decrypt`](src/CBCEncryption.java#L185) an encrypted ciphertext. Use the comments and the [ciphertext stealing](https://en.wikipedia.org/wiki/Ciphertext_stealing#CBC_ciphertext_stealing_encryption_using_a_standard_CBC_interface) page. Draw an example (perhaps the two samples), figure out where the bytes ought to go.
-  * See if your [`decrypt`](src/CBCEncryption.java#L185) does what you thought it should do in your example. See that it reverses the effect of [`encrypt`](src/CBCEncryption.java#L143).
-  * Build [`decryptFileBlowfish`](src/CBCEncryption.java#L269), it's straight forward. It's mostly the same parts used in [`encryptFileBlowfish`](src/CBCEncryption.java#L242), but in reverse (of course).
+    * Start with [the](src/CBCEncryption.java#L73) [samples](src/CBCEncryption.java#L99) I wrote to help me figure this out, then try changing something
+  * Work out how we should [`decrypt`](src/CBCEncryption.java#L189) an encrypted ciphertext. Use the comments and the [ciphertext stealing](https://en.wikipedia.org/wiki/Ciphertext_stealing#CBC_ciphertext_stealing_encryption_using_a_standard_CBC_interface) page. Draw an example (perhaps the two samples), figure out where the bytes ought to go.
+  * See if your [`decrypt`](src/CBCEncryption.java#L189) does what you thought it should do in your example. See that it reverses the effect of [`encrypt`](src/CBCEncryption.java#L147).
+  * Build [`decryptFileBlowfish`](src/CBCEncryption.java#L273), it's straight forward. It's mostly the same parts used in [`encryptFileBlowfish`](src/CBCEncryption.java#L246), but in reverse (of course).
   * [Play](src/CBCEncryption.java#L52) with it a few times!
 
 ### partialBlockSample
