@@ -216,7 +216,7 @@ public class CBCEncryption {
     public static String gatherBase64(Scanner sc) {
         StringBuilder sb = new StringBuilder();
         String line = sc.nextLine();
-        // code here
+        // code here (in the while condition)
         while(rng.nextInt() > 0 /* this is wrong. what condition goes here instead? */) {
             sb.append(line);
             line = sc.nextLine();
