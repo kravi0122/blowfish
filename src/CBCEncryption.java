@@ -34,7 +34,7 @@ public class CBCEncryption {
 
     public static long randomIV() {
         // code here
-        return 0;
+        return rng.nextLong();
     }
 
     public static String longToHexString(long x) {
@@ -178,27 +178,46 @@ public class CBCEncryption {
 
     public static long maskForFirstNBytes(int n) {
         // code here
-        return 0;
+    	long result=0;
+    	result= Long.reverseBytes(maskForLastNBytes(n));
+        return result;
     }
 
     public static long firstNBytesOfXRestFromY(int n, long x, long y) {
         // code here
-        return 0;
+    	long result =0;
+    	x=maskForFirstNBytes(n)&x;
+    	y=maskForFirstNBytes(8-n)&y;
+        return result;
     }
 
     public static byte[] decrypt(byte[] ciphertext, BlockCipher64 cipher, long IV) {
         // code here
         // check for an illegal argument
+    	if(ciphertext.length <=1)
+    		throw new IllegalArgumentException("plaintext must be longer than 8 bytes");
 
         // create a byte[] for the plaintext
+    	byte[] plaintext = new byte[ciphertext.length];
 
         // calculate how many blocks there are
+    	int blocks =ciphertext.length/8;
+    	if(ciphertext.length % 8 !=0){
+    		blocks++;
+    	}
 
         // handle the last two blocks (which are special because of ciphertext stealing)
-
+    	int other =ciphertext.length%8;
+    	long prev =IV;
+    	for(int b =0; b< blocks-2;b++){
+    		storeLongAt(plaintext,prev^ cipher.decrypt(longAt(ciphertext,b*8)),b*8);
+    		prev =longAt(ciphertext,b*8);
+    	}
         // loop over all other blocks, decrypting and xor'ing, and saving the results
-
-        return stringToBytes("hello");
+    	long last = longAt(ciphertext, (blocks-1)*8);
+    	long secondToLast = longAt(ciphertext, (blocks-2)*8);
+    	secondToLast = firstNBytesOfXRestFromY(other,secondToLast,cipher.decrypt(last));
+        return plaintext;
     }
 
     public static String gatherMessage(Scanner sc) {
@@ -217,7 +236,8 @@ public class CBCEncryption {
         StringBuilder sb = new StringBuilder();
         String line = sc.nextLine();
         // code here (in the while condition)
-        while(rng.nextInt() > 0 /* this is wrong. what condition goes here instead? */) {
+    
+        if(!line.startsWith(">>>")) {
             sb.append(line);
             line = sc.nextLine();
         }
@@ -231,6 +251,7 @@ public class CBCEncryption {
             if(count == 64) {
                 // code here
                 // what should happen to count here?
+            	count=0;	
                 sb.append('\n');
             }
             sb.append(c);
@@ -274,6 +295,8 @@ public class CBCEncryption {
         throws InvalidKeyException, FileNotFoundException {
         // code here
         // start by copy pasting encryptFile
+    	try(Scanner sc = new Scanner(new File(input_filename));
+    			PrintWriter write = new PrintWriter(output_filename)){	
 
         // when you find a line starting with "<<<"
             // get the IV
@@ -281,5 +304,23 @@ public class CBCEncryption {
             // decode and decrypt it
             // turn the bytes back into a string
             // write out the <<< line, the message, and the >>> line
+    		while(sc.hasNextLine()){
+    			String line =sc.nextLine();
+    			if(!line.startsWith("<<<")){
+    				write.println(line);
+    			}
+    			else{
+    				long iv = hexStringToLong(line.split(":")[1]);
+    				String message = gatherBase64(sc);
+    				byte[] dCoded =Base64.getDecoder().decode(message);
+    				byte[] pText = decrypt(dCoded, new Blowfish(key),iv);
+    				
+    				
+    				write.printf("<<<");
+    				write.println(bytesToString(pText));
+    				write.println(">>>");
+    			}
+    			}
+    		}
     }
 }
